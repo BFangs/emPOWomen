@@ -40,7 +40,7 @@ def create_scholarships():
                       organization='The Association for Women Geoscientists (AWG) Foundation',
                       amount=6000,
                       deadline= datetime.strptime("06/30/2018", "%m/%d/%Y"),
-                      annual = True
+                      annual = True,
                       url='http://usascholarships.com/awg-minority-scholarship/')
     two = Scholarship(scholarship_name = 'The AICPA Fellowship for Minority Doctoral Students',
                       organization='American Institute of CPAs',
