@@ -7,7 +7,10 @@
 
     <div class="container" id="modal-div">
       <!-- Trigger the modal with a button -->
+      <span id="modal-buttons">
       <button type="button" class="btn btn-secondary" id="login-btn">Login</button>
+      <button type="button" class="btn btn-primary" id="register-btn">Register</button>
+  </span>
 
       <!-- Login Modal -->
       <div class="modal fade" id="login-modal" role="dialog">
@@ -20,16 +23,16 @@
               <h4><span class="glyphicon glyphicon-lock"></span> Login</h4>
             </div>
             <div class="modal-body">
-              <form role="form">
+              <form action="/login" method="POST">
                 <div class="form-group">
                   <label for="usrname"><span class="glyphicon glyphicon-user"></span> Email</label>
                   <input type="text" class="form-control" name="user_email" id="usrname" placeholder="Email">
                 </div>
                 <div class="form-group">
                   <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-                  <input type="text" class="form-control" id="psw" placeholder="Enter password">
+                  <input type="password" class="form-control" id="psw" placeholder="Enter password" name="password">
                 </div>
-                <button type="submit" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
+                <button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-off"></span> Login</button>
               </form>
             </div>
             <div class="modal-footer">
@@ -40,7 +43,7 @@
       </div> 
 
       <!-- Trigger the modal with a button -->
-      <button type="button" class="btn btn-primary" id="register-btn">Register</button>
+      
 
       <!-- Modal -->
       <div class="modal fade" id="register-modal" role="dialog">
@@ -53,10 +56,10 @@
               <h4><span class="glyphicon glyphicon-lock"></span> Register</h4>
             </div>
             <div class="modal-body">
-              <form role="form">
+              <form action="/register" method="POST">
                 <div class="form-group">
                   <label for="usrname"><span class="glyphicon glyphicon-user"></span> Username</label>
-                  <input type="text" class="form-control" name="user_name" id="usrname" placeholder="Enter email">
+                  <input type="text" class="form-control" name="user_name" id="usrname" placeholder="Enter username">
                 </div>
                 <div class="form-group">
                   <label for="usrname"><span class="glyphicon glyphicon-user"></span> Email</label>
@@ -64,9 +67,9 @@
                 </div>
                 <div class="form-group">
                   <label for="psw"><span class="glyphicon glyphicon-eye-open"></span> Password</label>
-                  <input type="text" class="form-control" id="psw" placeholder="Enter password">
+                  <input class="form-control" type="password" id="psw" placeholder="Enter password" name="password">
                 </div>
-                <button type="submit" class="btn btn-default btn-success btn-block"><span class="glyphicon glyphicon-off"></span> Register</button>
+                <button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-off"></span> Register</button>
               </form>
             </div>
             <div class="modal-footer">
@@ -77,50 +80,13 @@
       </div> 
     </div>
     <div id="homepage-head">
-        <h1 class="page-title">Scholarships <span id="for">for</span> Women</h1><br>
+        <h1 class="page-title">EmPOWomen</h1><br>
         <p class="description-txt">Register and/or login to save scholarships, subscribe to relevant categories and emails of new scholarships, and receive notifications for upcoming deadlines</p>
 
     </div>
 
 
-    {% if 'user_id' in session %}
-
-
-        <h3>Your Categories</h3>
-            {% if user_categories %}
-                {% for item in filter_scholarships %} <!-- json object -->
-                    <div class="card text-center card w-50">
-                        <div class="card-header">
-                        {{ item[0].organization }}
-                        </div>
-                        <div class="card-block">
-                            <h4 class="card-title">{{ item[0].scholarship_name }}</h4>
-                            <p class="card-text">
-                                <span class="amount">{{ item[0].amount }}</span><br>
-                                <span class="categories">Categories: </span><br>
-                                {% for category in item[1] %}
-                                    {{ category }}<br>
-                                {% endfor %}
-
-                            </p>
-                            <a href="{{item[0].url}}" target="_blank" class="btn btn-primary">Apply Online</a>
-                            <a href="/save" method="POST" class="btn btn-secondary save-btn">Save</a>
-                        </div>
-                        <div class="card-footer text-muted">Deadline: {{ item[0].deadline }}
-                        </div>
-                    </div>
-                    <p>
-                    </p>
-                {% endfor %}
-            {% else %}
-                <p>You currently don't have any subscribed categories. <br>
-                    <a href="/users/{{ user.user_id }}">Visit your profile page</a> to add categories to subscribe to.
-                </p>
-            {% endif %}
-
-        <h3>All</h3>
-
-    {% endif %}
+    <div id="home-all-cards">
 
     {% for item in scholarships %}
 
@@ -131,7 +97,7 @@
           <div class="card-block">
             <h4 class="card-title">{{ item[0].scholarship_name }}</h4>
             <p class="card-text">
-                <span class="amount">{{ item[0].amount }}</span><br>
+                <span class="amount">${{ item[0].amount }}</span><br>
                 <span class="categories">Categories: </span><br>
                 {% for category in item[1] %}
                     {{ category }}<br>
@@ -139,7 +105,7 @@
 
             </p>
             <a href="{{item[0].url}}" target="_blank" class="btn btn-primary">Apply Online</a>
-            <a href="/save" method="POST" class="btn btn-secondary save-btn">Save</a>
+            <!-- <a href="/save" method="POST" class="btn btn-secondary save-btn">Save</a> -->
           </div>
           <div class="card-footer text-muted">Deadline: {{ item[0].deadline }}
             
@@ -148,6 +114,9 @@
         <p>
         </p>
     {% endfor %}
+
+
+</div>
 
 <script>
 

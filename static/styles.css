@@ -35,19 +35,26 @@ h3 {
     font-family: 'Playfair Display SC', serif;
 }
 
-/*a, a:link, a:hover, a:active, a:visited {
-    color: #425460;
-}*/
+a, a:link, a:hover, a:active, a:visited {
+    color: #4d0000;
+}
 
 .btn {
     font-family: 'Oxygen', sans-serif;
+    color: white;
 
 }
 
 .btn-primary {
     background-color: #990000;
     border-color: #990000;
+    color:white;
     
+}
+
+
+.primary-btn-link{
+    color: white;
 }
 
 .btn-primary:hover {
@@ -56,19 +63,7 @@ h3 {
     
 }
 
-.btn-outline-info, .btn-outline-info:visited {
-    border-color: #88B04B;
-    color: #88B04B;
 
-}
-
-.btn-outline-info:hover,
-.btn-outline-info:active,
-.btn-outline-info:focus {
-    background-color: #88B04B;
-    border-color: #88B04B;
-    color: white;
-}
 
 .btn-secondary, 
 .btn-secondary:visited, 
@@ -115,3 +110,21 @@ h3 {
 #for {
     font-family: 'Bad Script', cursive;
 }
+
+#home-all-cards {
+    padding-left: 120px;
+}
+
+
+#modal-buttons {
+    /*padding-top: 10px;*/
+    padding-left: 850px;
+}
+
+#login-btn{
+    padding-top: 10px;
+}
+
+/*#results-all-div {
+    padding-left: 300px;
+}*/

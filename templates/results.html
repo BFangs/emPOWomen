@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+{% if 'user_id' in session %}
+
+
+        <h4>Your Categories</h4>
+
+
+                <p>You currently don't have any subscribed categories. <br>
+                    <a href="/user/{{ session['user_id'] }}">Visit your profile page</a> to add categories to subscribe to.
+                </p>
+        <h4>All</h4>
+        <div id="results-all-div">
+
+            {% for item in scholarships_list %} 
+        <div class="card text-center card w-50">
+            <div class="card-header">
+            {{ item[0].organization }}
+            </div>
+            <div class="card-block">
+                <h4 class="card-title">{{ item[0].scholarship_name }}</h4>
+                <p class="card-text">
+                    <span class="amount">${{ item[0].amount }}</span><br>
+                    <span class="categories">Categories: </span><br>
+                    {% for category in item[1] %}
+                        {{ category }}<br>
+                    {% endfor %}
+
+                </p>
+                <a href="{{item[0].url}}" target="_blank" class="btn btn-primary primary-btn-link">Apply Online</a>
+                <a href="/save" method="POST" class="btn btn-secondary save-btn">Save</a>
+            </div>
+            <div class="card-footer text-muted">Deadline: {{ item[0].deadline }}
+            </div>
+        </div>
+        <p>
+        </p>
+    {% endfor %}
+</div>
+
+    {% endif %}
+
+
+{% endblock %}

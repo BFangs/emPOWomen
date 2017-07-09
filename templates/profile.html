@@ -4,24 +4,23 @@
 
 {% block content %}
 <div>
-    <h2>{{ user.user_name }}</h2>
+    <h1>{{ user.user_name }}</h1>
     <p>
-        {{ user.user_email }} <br>
+        <h2>{{ user.user_email }}</h2> <br>
 
         {% if user_categories %}
         Categories subscribed to: <br>
         <ul>
-
-            {{ for category in user_categories }}
+            {% for category in user_categories %}
             <li> {{ category }}
             {% endfor %}
         </ul>
         {% endif %}
-        Add categories:<br>
+        <h4>Add categories:</h4><br>
         <form action="/add_category" method="POST">
             <ul>
-                {% for type in categories %}
-                <li class="search-checkbox"><input type="checkbox" name="categories" value="{{ type.category_id }}"> {{ type.category_name }}</li>
+                {% for type in non_user_categories %}
+                <li class="search-checkbox"><input type="checkbox" name="categories" value="{{ type }}"> {{ type }}</li>
                 {% endfor %}
              </ul>
              <input type="submit" id="category-submit" name="submit" class="btn btn-primary" value="Add">
