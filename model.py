@@ -23,7 +23,7 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_email = db.Column(db.String(50), nullable=False)
-    password = db.Column(db.String(25), nullable=False)
+    password = db.Column(db.String(100), nullable=False)
     user_name = db.Column(db.String(50), nullable=False)
 
     def __repr__ (self):
@@ -38,13 +38,13 @@ class Scholarship(db.Model):
     __tablename__ = "scholarships"
 
     scholarship_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    scholarship_name = db.Column(db.String(100), nullable=False)
+    scholarship_name = db.Column(db.String(100), nullable=False, unique=True)
     organization = db.Column(db.String(100))
     amount = db.Column(db.Integer)
     annual = db.Column(db.Boolean)
     deadline = db.Column(db.DateTime)
     created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=pacific))
-    url = db.Column(db.String(200), unique=True)
+    url = db.Column(db.String(200))
 
     def __repr__(self):
         """Displayed when called"""

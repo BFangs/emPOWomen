@@ -119,7 +119,7 @@ def show_users(user_id):
 
     non_user_categories = set(categories) & set(all_categories)
 
-    return render_template(profile.html, user=user, user_categories=categories, non_user_categories=non_user_categories)
+    return render_template('profile.html', user=user, user_categories=categories, non_user_categories=non_user_categories)
 
 
 @app.route('/scholarships/<user_id>')
