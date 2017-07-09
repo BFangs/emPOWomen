@@ -38,7 +38,7 @@ def login():
         hashedpass = q.password.encode('utf8')
         if bcrypt.checkpw(password, hashedpass):
             session['user_id'] = user.user_id
-            return redirect('/')
+            return redirect('/get_user_scholar')
     else:
         flash("Username or password not found")
         return redirect ('/login')
@@ -66,6 +66,8 @@ def register():
 
     session['user_id'] = new_user.user_id
 
+    return redirect('/get_user_scholar')
+
 
 @app.route('/save', methods = ['POST'])
 def save_scholarship():
@@ -83,17 +85,28 @@ def save_scholarship():
         return redirect('/login')
 
 
-@app.route('/users')
-def show_users():
-    """shows all users"""
-    pass
+@app.route('/user/<user_id>')
+def show_users(user_id):
+    """shows user profile"""
+    
+    user = User.query.get(User.user_id==user.id)
+
+    return render_template(somehtml.html, user=user)
 
 
-@app.route('/scholarships')
-def show_scholarships():
+@app.route('/scholarships/<user_id>')
+def show_scholarships(user_id):
     """shows all scholarships?"""
+    
+    scholarships =[]
+    user_scholarships = UserScholarship.query.filter_by(User.user_id==user_id)
+    for user_scholarship in user_scholarships:
+        scholarship_id = user_scholarship.scholarship_id
+        scholarship = Scholarship.query.get(scholarship_id)
+        scholarships.append(scholarship)
 
-    pass
+    return render_template(somehtml.html, scholarships=scholarships)
+
 
 @app.route('/add_category')
 def add_user_category():
@@ -124,7 +137,7 @@ def get_users_scholarship():
         for scholarship_category in scholarship_categories:
             scholarships.append(Scholarship.query.filter(Scholarship.scholarship_id==scholarship_category.scholarship_id))
 
-    return render_template('somehtml.html', scholarships=scholarships)
+    return render_template('results.html', scholarships=scholarships)
 
 
 
