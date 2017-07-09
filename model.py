@@ -44,7 +44,7 @@ class Scholarship(db.Model):
     annual = db.Column(db.Boolean)
     deadline = db.Column(db.DateTime)
     created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=pacific))
-    url = db.Column(db.String(100), unique=True)
+    url = db.Column(db.String(200), unique=True)
 
     def __repr__(self):
         """Displayed when called"""
