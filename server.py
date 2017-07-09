@@ -4,6 +4,7 @@ import hashlib
 from flask_debugtoolbar import DebugToolbarExtension
 from model import connect_to_db
 from gevent.wsgi import WSGIServer
+from model import (Scholarship, User, Category, ScholarshipCategory, UserCategory, UserScholarship)
 
 app = Flask(__name__)
 app.secret_key = "GOFEMINISM"
@@ -17,7 +18,7 @@ def display_homepage():
     scholarships_list = []
     for scholarship in scholarships:
         scholarship_id = scholarship.scholarship_id
-        scholarship_categories = ScholarshipCategory.query.filter_by(scholarship_id= scholarship_id).all()
+        scholarship_categories = ScholarshipCategory.query.filter(Scholarship.scholarship_id==scholarship_id).all()
         category_list =[]
         for sc in scholarship_categories:
             category_list.append(sc.categories.category_name)
@@ -26,7 +27,7 @@ def display_homepage():
     return render_template('home.html', scholarships=scholarships_list)
 
 
-@app.route('/login' methods=["POST"])
+@app.route('/login', methods=["POST"])
 def login():
     """logs in user"""
 
@@ -44,7 +45,7 @@ def login():
         return redirect ('/login')
 
 
-@app.route('/logout' methods=['POST'])
+@app.route('/logout', methods=['POST'])
 def logout():
     """logs out user"""
 
@@ -68,7 +69,7 @@ def register():
     session['user_id'] = new_user.user_id
 
 
-@app.route('/save' methods = ['POST'])
+@app.route('/save', methods = ['POST'])
 def save_scholarship():
     """save scholarship to user's profile"""
 
@@ -86,6 +87,8 @@ def save_scholarship():
 
 # @app.route('/users')
 # @app.route('/scholarships')
+"""Boya, you can do either of these two"""
+
 
 @app.route('/add_category')
 def add_user_category():
@@ -96,13 +99,24 @@ def add_user_category():
     user_id = session['user_id']
 
     for category in categories:
-        category = Category.query.filter(Category.name = category).first()
+        category = Category.query.filter(Category.name==category).first()
         user_category = UserCategory(user_id= user_id, category_id = category.category_id)
         db.add(user_category)
         db.commit()
 
-# @app.route('/get_user_scholar')
-# def get_users_scholarship():
+@app.route('/get_user_scholar')
+def get_users_scholarship():
+    """"""
+
+    # scholarships =[]
+
+    # user_categories = UserCategory.query.filter_by(user_id==session['user_id']).all()
+    # for user_category in user_categories:
+    #     category_id=user_category.category_id
+    #     scholarship_categories = ScholarshipCategory.query.filter(category_id==category_id).all()
+    #     for scholarship in scholarship_categories:
+
+
 
 
 if __name__ == "__main__":

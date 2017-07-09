@@ -121,6 +121,20 @@ class UserScholarship(db.Model):
         return"<%s>"%(self.us_id)
 
 
+class URL(db.Model):
+    """URLS to scrape"""
+
+    __tablename__="urls"
+
+    url_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    url = db.Column(db.String(100), nullable=False)
+
+    def __repr__(self):
+        """Displayed when called"""
+
+        return"<%s>"(self.url_id)
+
+
 if __name__ == "__main__":
     # when running module interactively will allow working with database directly
     from server import app
