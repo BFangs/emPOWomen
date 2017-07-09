@@ -83,10 +83,17 @@ def save_scholarship():
         return redirect('/login')
 
 
-# @app.route('/users')
-# @app.route('/scholarships')
-"""Boya, you can do either of these two"""
+@app.route('/users')
+def show_users():
+    """shows all users"""
+    pass
 
+
+@app.route('/scholarships')
+def show_scholarships():
+    """shows all scholarships?"""
+
+    pass
 
 @app.route('/add_category')
 def add_user_category():
@@ -102,8 +109,6 @@ def add_user_category():
         db.add(user_category)
         db.commit()
 
-# @app.route('/get_user_scholar')
-# def get_users_scholarship():
 
 @app.route('/get_user_scholar')
 def get_users_scholarship():
