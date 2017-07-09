@@ -110,7 +110,7 @@ class UserScholarship(db.Model):
 
     us_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     scholarship_id = db.Column(db.Integer, db.ForeignKey('scholarships.scholarship_id'))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id')) 
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
     users = db.relationship('User', backref='user_scholarships')
     scholarships = db.relationship('Scholarship', backref='user_scholarships')
@@ -119,6 +119,20 @@ class UserScholarship(db.Model):
         """Displayed when called"""
 
         return"<%s>"%(self.us_id)
+
+
+class URL(db.Model):
+    """URLS to scrape"""
+
+    __tablename__="urls"
+
+    url_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    url = db.Column(db.String(100), nullable=False)
+
+    def __repr__(self):
+        """Displayed when called"""
+
+        return"<%s>"(self.url_id)
 
 
 if __name__ == "__main__":

@@ -20,8 +20,8 @@ def create_categories():
     first_gen = Category(category_name="First Generation")
     graduate_students = Category(category_name="Graduate Students")
     asian = Category(category_name="Asian")
-    
-    db.session.add_all([woman_of_color, LGBTQ, moms, low_income, 
+
+    db.session.add_all([woman_of_color, LGBTQ, moms, low_income,
                         native_american, visas, first_gen,
                         graduate_students, asian])
     db.session.commit()
@@ -34,17 +34,17 @@ def create_scholarships():
 
     Scholarship.query.delete()
 
-    one = Scholarship(scholarship_name = 'TheAWG Minority Scholarship', 
+    one = Scholarship(scholarship_name = 'TheAWG Minority Scholarship',
                       organization='The Association for Women Geoscientists (AWG) Foundation',
                       amount='$6,000',
                       deadline='June 30th each year',
                       url='http://usascholarships.com/awg-minority-scholarship/')
-    two = Scholarship(scholarship_name = 'The AICPA Fellowship for Minority Doctoral Students', 
+    two = Scholarship(scholarship_name = 'The AICPA Fellowship for Minority Doctoral Students',
                       organization='American Institute of CPAs',
                       amount='$12,000',
                       deadline='May 15, 2017',
                       url='http://www.aicpa.org/Career/DiversityInitiatives/Pages/fmds.aspx')
-    three = Scholarship(scholarship_name = 'The Asian Women In Business Scholarship', 
+    three = Scholarship(scholarship_name = 'The Asian Women In Business Scholarship',
                       organization='The AWIB Scholarship Fund',
                       amount='$2500',
                       url='http://www.awib.org/index.cfm?fuseaction=Page.ViewPage&PageID=811')
@@ -76,9 +76,7 @@ if __name__ == "__main__":
     connect_to_db(app)
     db.create_all()
 
-    
+
     create_scholarships()
     create_categories()
     create_scholarship_categories()
-    
-

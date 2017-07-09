@@ -34,8 +34,8 @@ def login():
     password = request.form.get('password')
     user = User.query.filter(User.email==email).first()
     if user:
-        password = password.encode('utf8') 
-        hashedpass = q.password.encode('utf8') 
+        password = password.encode('utf8')
+        hashedpass = q.password.encode('utf8')
         if bcrypt.checkpw(password, hashedpass):
             session['user_id'] = user.user_id
             return redirect('/')
@@ -60,26 +60,23 @@ def register():
     email = request.form.get('user_email') # changed
     password = request.form.get('password')
     name = request.form.get('user_name') # changed
-
     new_user = User(user_email=email, password=password, user_name=name) #user_name #user_email
     db.session.add(new_user) #
     db.session.commit() #
 
     session['user_id'] = new_user.user_id
 
-    
 
-
-@app.route('/save', methods=['POST'])
+@app.route('/save', methods = ['POST'])
 def save_scholarship():
     """save scholarship to user's profile"""
 
     scholarship_id = request.form.get("scholarship_id")
 
     if 'user_id' in session:
-        user_scholarship = UserScholarship(scholarship_id, user_id) 
-        db.add(user_scholarship) #db.session.add(blah)
-        db.commit() #db.session.commit
+        user_scholarship = UserScholarship(scholarship_id, user_id)
+        db.add(user_scholarship)
+        db.commit()
 
     else:
         flash("Login to save")
@@ -88,6 +85,8 @@ def save_scholarship():
 
 # @app.route('/users')
 # @app.route('/scholarships')
+"""Boya, you can do either of these two"""
+
 
 @app.route('/add_category')
 def add_user_category():
@@ -106,12 +105,28 @@ def add_user_category():
 # @app.route('/get_user_scholar')
 # def get_users_scholarship():
 
+@app.route('/get_user_scholar')
+def get_users_scholarship():
+    """displays scholarships that fit user's categories"""
+
+    scholarships =[]
+
+    user_categories = UserCategory.query.filter_by(user_id==session['user_id']).all()
+
+    for user_category in user_categories:
+        category_id=user_category.category_id
+        scholarship_categories = ScholarshipCategory.query.filter(Scholarship.category_id==category_id).all()
+        for scholarship_category in scholarship_categories:
+            scholarships.append(Scholarship.query.filter(Scholarship.scholarship_id==scholarship_category.scholarship_id))
+
+    return render_template('somehtml.html', scholarships=scholarships)
+
+
 
 if __name__ == "__main__":
     app.debug = True
     app.jinja_env.auto_reload = app.debug
     connect_to_db(app)
-    app.run(port=5000, host='0.0.0.0')
-    # http_server = WSGIServer(('0.0.0.0', 5000), app)
-    # http_server.serve_forever()
+    http_server = WSGIServer(('0.0.0.0', 5000), app)
+    http_server.serve_forever()
     DebugToolbarExtension(app)
