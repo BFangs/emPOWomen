@@ -39,13 +39,13 @@ def create_scholarships():
     one = Scholarship(scholarship_name = 'TheAWG Minority Scholarship',
                       organization='The Association for Women Geoscientists (AWG) Foundation',
                       amount=6000,
-                      deadline= datetime.datetime(2018, 6, 30, 0, 0),
+                      deadline= datetime.strptime("06/30/2018", "%m/%d/%Y"),
                       annual = True,
                       url='http://usascholarships.com/awg-minority-scholarship/')
     two = Scholarship(scholarship_name = 'The AICPA Fellowship for Minority Doctoral Students',
                       organization='American Institute of CPAs',
                       amount=12000,
-                      deadline=datetime.datetime(2017, 5, 15, 0, 0),
+                      deadline=datetime.strptime("05/15/2017", "%m/%d/%Y"),
                       url='http://www.aicpa.org/Career/DiversityInitiatives/Pages/fmds.aspx')
     three = Scholarship(scholarship_name = 'The Asian Women In Business Scholarship',
                       organization='The AWIB Scholarship Fund',

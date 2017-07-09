@@ -6,7 +6,7 @@ from model import (User, Scholarship, Category, UserCategory, ScholarshipCategor
 from model import db
 
 
-class Scraper:
+class Scraper(object):
 
     def __init__(self, website):
         self.website = website
