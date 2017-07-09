@@ -1,5 +1,5 @@
 from jinja2 import StrictUndefined
-from flask import (Flask, session, render_template, request, jsonify)
+from flask import (Flask, session, render_template, request, jsonify, redirect, flash)
 import hashlib
 from flask_debugtoolbar import DebugToolbarExtension
 from model import connect_to_db, User, Scholarship, Category, UserCategory, UserScholarship, ScholarshipCategory, db #add db
@@ -40,9 +40,12 @@ def login():
         if bcrypt.checkpw(password, hashedpass):
             session['user_id'] = user.user_id
             return redirect('/get_user_scholar')
+        else:
+            flash("Incorrect password")
+            return redirect ('/')
     else:
-        flash("Username or password not found")
-        return redirect ('/login')
+        flash("Email not found")
+        return redirect('/login')
 
 
 @app.route('/logout', methods=['POST'])
@@ -157,7 +160,7 @@ def get_users_scholarship():
 
     scholarships =[]
 
-    user_categories = UserCategory.query.filter_by(user_id==session['user_id']).all()
+    user_categories = UserCategory.query.filter_by(UserCategory.user_id==int(session['user_id'])).all()
 
     for user_category in user_categories:
         category_id=user_category.category_id
@@ -173,6 +176,7 @@ if __name__ == "__main__":
     app.debug = True
     app.jinja_env.auto_reload = app.debug
     connect_to_db(app)
+    DebugToolbarExtension(app)
     http_server = WSGIServer(('0.0.0.0', 5000), app)
     http_server.serve_forever()
-    DebugToolbarExtension(app)
+   

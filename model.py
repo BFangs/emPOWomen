@@ -112,6 +112,7 @@ class UserScholarship(db.Model):
     us_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     scholarship_id = db.Column(db.Integer, db.ForeignKey('scholarships.scholarship_id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    sent = db.Column(db.Boolean, default=False)
 
     users = db.relationship('User', backref='user_scholarships')
     scholarships = db.relationship('Scholarship', backref='user_scholarships')
