@@ -39,9 +39,9 @@ class Scholarship(db.Model):
 
     scholarship_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     scholarship_name = db.Column(db.String(100), nullable=False)
-    organization = db.Column(db.String(50))
+    organization = db.Column(db.String(100))
     amount = db.Column(db.String(20))
-    deadline = db.Column(db.DateTime)
+    deadline = db.Column(db.String(30))
     created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=pacific))
     url = db.Column(db.String(100), unique=True)
 
@@ -57,7 +57,7 @@ class Category(db.Model):
     __tablename__ = "categories"
 
     category_id = db.Column(db.Integer, autoincrement=True, primary_key= True)
-    category_name = db.Column(db.String(15))
+    category_name = db.Column(db.String(25))
 
     def __repr__(self):
         """Displayed when called"""
@@ -103,7 +103,7 @@ class ScholarshipCategory(db.Model):
         return"<%s>"%(self.sc_id)
 
 
-class UserScholarships(db.Model):
+class UserScholarship(db.Model):
     """"User's preferred scholarships table"""
 
     __tablename__ = "user_scholarships"
