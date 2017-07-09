@@ -87,3 +87,4 @@ if __name__ == "__main__":
     create_scholarships()
     create_categories()
     create_scholarship_categories()
+    create_scholarships_website()
