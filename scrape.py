@@ -2,23 +2,25 @@ from bs4 import BeautifulSoup
 from urllib2 import urlopen
 import re
 from datetime import datetime
+from model import (User, Scholarship, Category, UserCategory, ScholarshipCategory, UserCategory)
+from model import db
 
 
 class Scraper:
 
-    def __init__(self, url):
-        self.url = url
+    def __init__(self, website):
+        self.website = website
         self.results = []
         self.time = datetime.now()
 
     def start_scrape(self):
-        html = urlopen(self.url).read()
+        html = urlopen(self.website).read()
         soup = BeautifulSoup(html, "html.parser")
         return soup
 
     def get_from_table(self):
         """for scholarships.com specific table configuration returns scholarship info"""
-        soup = start_scrape(self.url)
+        soup = self.start_scrape()
         rows = soup.find_all("tr")
         for row in rows[1:]:
             print row
@@ -35,12 +37,19 @@ class Scraper:
                 deadline = datetime.strptime(date, "%m/%d/%Y")
             except:
                 deadline = None
-            scholarship = {"link": link,
-                           "name": name,
+            scholarship = {"url": link,
+                           "scholarship_name": name,
                            "amount": amount_num,
-                           "date": deadline}
+                           "deadline": deadline}
             print scholarship
             self.results.append(scholarship)
         return self.results
 
-    def 
+    @classmethod
+    def load_all(cls, website):
+        data = cls(website)
+        data.get_from_table()
+        for entry in data.results:
+            entered = Scholarship(**entry)
+            db.session.add(entered)
+        db.session.commit()

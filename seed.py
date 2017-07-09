@@ -2,6 +2,8 @@ from sqlalchemy import func
 from model import (User, Scholarship, Category, UserCategory, ScholarshipCategory, UserCategory)
 from flask import Flask
 from model import connect_to_db, db
+from datetime import datetime
+from scrape import Scraper
 
 
 def create_categories():
@@ -36,21 +38,26 @@ def create_scholarships():
 
     one = Scholarship(scholarship_name = 'TheAWG Minority Scholarship',
                       organization='The Association for Women Geoscientists (AWG) Foundation',
-                      amount='$6,000',
-                      deadline='June 30th each year',
+                      amount=6000,
+                      deadline= datetime.datetime(2018, 6, 30, 0, 0),
+                      annual = True
                       url='http://usascholarships.com/awg-minority-scholarship/')
     two = Scholarship(scholarship_name = 'The AICPA Fellowship for Minority Doctoral Students',
                       organization='American Institute of CPAs',
-                      amount='$12,000',
-                      deadline='May 15, 2017',
+                      amount=12000,
+                      deadline=datetime.datetime(2017, 5, 15, 0, 0),
                       url='http://www.aicpa.org/Career/DiversityInitiatives/Pages/fmds.aspx')
     three = Scholarship(scholarship_name = 'The Asian Women In Business Scholarship',
                       organization='The AWIB Scholarship Fund',
-                      amount='$2500',
+                      amount=2500,
                       url='http://www.awib.org/index.cfm?fuseaction=Page.ViewPage&PageID=811')
 
     db.session.add_all([one, two, three])
     db.session.commit()
+
+def create_scholarships_website():
+    """creates scholarships in scholarships table"""
+    Scraper.load_all("https://www.scholarships.com/financial-aid/college-scholarships/scholarship-directory/gender/female")
 
 
 def create_scholarship_categories():

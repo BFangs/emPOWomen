@@ -40,8 +40,9 @@ class Scholarship(db.Model):
     scholarship_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     scholarship_name = db.Column(db.String(100), nullable=False)
     organization = db.Column(db.String(100))
-    amount = db.Column(db.String(20))
-    deadline = db.Column(db.String(30))
+    amount = db.Column(db.Integer)
+    annual = db.Column(db.Boolean)
+    deadline = db.Column(db.DateTime)
     created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=pacific))
     url = db.Column(db.String(100), unique=True)
 
