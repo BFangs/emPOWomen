@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+    <div id="homepage-head">
+        <h1 class="page-title">Scholarships <span id="for">for</span> Women</h1><br>
+        <p class="description-txt">Register and/or login to save scholarships, receive emails of new scholarships, and notifications for upcoming deadlines</p>
+
+    </div>
+
+
+    <div id="log-in">
+    <form action="/login" method="POST" class="form-inline">
+      <div class="form-group">
+        <input type="email" class="form-control" name="email" id="email" placeholder="Email"> &nbsp;
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" name="password" id="password" placeholder="Password"> &nbsp;
+      <input type="submit" name="submit" value="Login" class="btn btn-primary">
+    </div>
+    </form>
+    </div>
+
+
+    <div id="sign-up">
+    <form action="/register" method="POST">
+        <div>
+          <div class="form-group row">
+          <input type="text" class="form-control col-sm-4" name="user_name" placeholder="Username">&nbsp;
+        </div>
+        <div class="form-group row">
+          <input type="email" class="form-control col-sm-4" name="user_email" required="required" placeholder="Email">&nbsp;<br>
+        </div>
+        <div class="form-group row">
+          <input type="password" class="form-control col-sm-4" name="password" id="register-password" required="required" placeholder="Password">&nbsp;
+          <input type="password" class="form-control col-sm-4" name="confirm-password" id="confirm-password" required="required" placeholder="Confirm">
+          <br>
+          <span id='message'></span><br>
+        </div>
+        <div class="form-group row">
+          <input type="submit" id="signup-submit" name="submit" class="btn btn-primary" value="Register">
+    </div>
+
+
+    {% if 'user_id' in session %}
+        <h3>Your Categories</h3>
+            {% if user_categories %}
+                {% for item in filter_scholarships %}
+                    <div class="card text-center card w-50">
+                        <div class="card-header">
+                        {{ item[0].organization }}
+                        </div>
+                        <div class="card-block">
+                            <h4 class="card-title">{{ item[0].scholarship_name }}</h4>
+                            <p class="card-text">
+                                <span class="amount">{{ item[0].amount }}</span><br>
+                                <span class="categories">Categories: </span><br>
+                                {% for category in item[1] %}
+                                    {{ category }}<br>
+                                {% endfor %}
+
+                            </p>
+                            <a href="{{item[0].url}}" target="_blank" class="btn btn-primary">Apply Online</a>
+                            <a href="/save" method="POST" class="btn btn-secondary save-btn">Save</a>
+                        </div>
+                        <div class="card-footer text-muted">Deadline: {{ item[0].deadline }}
+                        </div>
+                    </div>
+                    <p>
+                    </p>
+                {% endfor %}
+            {% else %}
+                <p>You currently don't have any subscribed categories. <br>
+                    <a href="/users/{{ user.user_id }}">Visit your profile page</a> to add categories to subscribe to.
+                </p>
+            {% endif %}
+
+        <h3>All</h3>
+
+    {% endif %}
+
+    {% for item in scholarships %}
+
+        <div class="card text-center card w-50">
+          <div class="card-header">
+            {{ item[0].organization }}
+          </div>
+          <div class="card-block">
+            <h4 class="card-title">{{ item[0].scholarship_name }}</h4>
+            <p class="card-text">
+                <span class="amount">{{ item[0].amount }}</span><br>
+                <span class="categories">Categories: </span><br>
+                {% for category in item[1] %}
+                    {{ category }}<br>
+                {% endfor %}
+
+            </p>
+            <a href="{{item[0].url}}" target="_blank" class="btn btn-primary">Apply Online</a>
+            <a href="/save" method="POST" class="btn btn-secondary save-btn">Save</a>
+          </div>
+          <div class="card-footer text-muted">Deadline: {{ item[0].deadline }}
+            
+          </div>
+        </div>
+        <p>
+        </p>
+    {% endfor %}
+
+<script>
+
+    $('#register-password, #confirm-password').on('keyup', function () {
+      if ($('#register-password').val() == $('#confirm-password').val()) {
+        $('#message').html(' Matching').css('color', 'green');
+        $("#signup-submit").attr('disabled', false);
+      } 
+      else if ($('#register-password').val() =="" && $('#confirm-password').val()=="") {
+        $('#message').html('');
+      }
+      else {
+        $('#message').html(' Not Matching').css('color', 'red');
+        $("#signup-submit").attr('disabled', true);
+    }
+  });
+
+// </script>
+
+{% endblock %}

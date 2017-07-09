@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+    <div>
+        <h2>Saved Scholarships</h2>
+        <p>
+            You will receive email notifications of approaching deadlines for scholarships you've saved.
+        </p>
+    </div>
+
+    {% for item in scholarships %}
+
+    <div class="card text-center card w-50">
+      <div class="card-header">
+        {{ item[0].organization }}
+      </div>
+      <div class="card-block">
+        <h4 class="card-title">{{ item[0].scholarship_name }}</h4>
+        <p class="card-text">
+            Amount: {{ item[0].amount }}<br>
+
+            Categories: <br>
+            {% for category in item[1] %}
+                {{ category }}<br>
+            {% endfor %}
+
+        </p>
+        <a href="{{item[0].url}}" target="_blank" class="btn btn-primary">Apply Online</a>
+        <a href="/save" method="POST" class="btn btn-secondary">Save</a>
+      </div>
+      <div class="card-footer text-muted">Deadline: {{ item[0].deadline }}
+        
+      </div>
+    </div>
+    <p>
+    </p>
+{% endfor %}
+
+
+{% endblock %}

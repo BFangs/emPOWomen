@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+<div>
+    <h2>{{ user.user_name }}</h2>
+    <p>
+        {{ user.user_email }} <br>
+
+        {% if user_categories %}
+        Categories subscribed to: <br>
+        <ul>
+
+            {{ for category in user_categories }}
+            <li> {{ category }}
+            {% endfor %}
+        </ul>
+        {% endif %}
+        Add categories:<br>
+        <form action="/add_category" method="POST">
+            <ul>
+                {% for type in categories %}
+                <li class="search-checkbox"><input type="checkbox" name="categories" value="{{ type.category_id }}"> {{ type.category_name }}</li>
+                {% endfor %}
+             </ul>
+             <input type="submit" id="category-submit" name="submit" class="btn btn-primary" value="Add">
+        </form>
+
+
+
+
+    </p>
+
+</div>
+
+
+
+
+{% endblock %}

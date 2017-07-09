@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+  <title>Scholarships for Women</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Playfair+Display+SC:400,700|Oxygen:400,700|Bad+Script" rel="stylesheet">
+</head>
+
+<body class="background">
+  <script src="http://code.jquery.com/jquery.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+
+  <!-- Show flashed messages -->
+  {% with messages = get_flashed_messages() %}
+      {% for message in messages %}
+          <div class="alert alert-warning">{{ message }}</div>
+      {% endfor %}
+  {% endwith %}
+
+
+  {% if 'user_id' in session %}
+
+  <nav class="navbar sticky-top navbar-toggleable-md navbar-inverse bg-inverse">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="#">Scholarships for Women</a>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Browse Scholarships</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/scholarships/{{session['user_id']}}">Saved Scholarships</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/{{session['user_id']}}">Profile</a>
+        </li>
+
+      </ul>
+      <span class="navbar-text">
+        <a href="/logout" class="log-out">Log Out</a>
+      </span>
+    </div>
+</nav>
+
+
+  {% endif %}
+
+
+
+
+  <div class="container"> 
+    {% block content %} put your content here {% endblock %}
+  </div>
+
+</body>
+</html>
+

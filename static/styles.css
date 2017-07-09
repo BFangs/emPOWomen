@@ -1,0 +1,117 @@
+body {
+    font-family: 'Oxygen', sans-serif;
+
+}
+
+.background {
+    /*background-image:linear-gradient(to bottom, rgba(255,255,255,0.5) 100%, rgba(255,255,255,0.5) 100%), url("/static/images/pineapples.jpeg");*/
+    background-image:linear-gradient(to bottom, rgba(255,255,255,0.7) 100%, rgba(255,255,255,0.7) 100%), url("/static/homepage.jpeg");
+    background-size: 100%;
+    background-color: #FFFFFF;
+    /*background-position: 720px 35px;*/
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /*background-position: 0px -250px;*/
+}
+
+h2 {
+    text-align: center;
+    padding-top: 20px;
+    font-family: 'Playfair Display SC', serif;
+    font-weight: bold;
+}
+
+h1 {
+    text-align: center;
+    padding-top: 10px;
+    font-family: 'Playfair Display SC', serif;
+    font-weight: bold;
+
+}
+
+h3 {
+    text-align: center;
+    padding-top: 20px;
+    font-family: 'Playfair Display SC', serif;
+}
+
+/*a, a:link, a:hover, a:active, a:visited {
+    color: #425460;
+}*/
+
+.btn {
+    font-family: 'Oxygen', sans-serif;
+
+}
+
+.btn-primary {
+    background-color: #990000;
+    border-color: #990000;
+    
+}
+
+.btn-primary:hover {
+    background-color: #4d0000;
+    border-color: #4d0000;
+    
+}
+
+.btn-outline-info, .btn-outline-info:visited {
+    border-color: #88B04B;
+    color: #88B04B;
+
+}
+
+.btn-outline-info:hover,
+.btn-outline-info:active,
+.btn-outline-info:focus {
+    background-color: #88B04B;
+    border-color: #88B04B;
+    color: white;
+}
+
+.btn-secondary, 
+.btn-secondary:visited, 
+.btn-outline-primary, 
+.btn-outline-primary:visited {
+    border-color: #990000;
+    color: #990000;
+
+}
+
+.btn-secondary:hover,
+.btn-secondary:active,
+.btn-secondary:focus, 
+.btn-outline-primary:hover, 
+.btn-outline-primary:active, 
+.btn-outline-primary:focus {
+    background-color: #990000;
+    border-color: #990000;
+    color: white;
+}
+
+.categories {
+    font-weight: bold;
+    color: #4d0000;
+}
+
+.amount {
+    font-size: 1.5em;
+}
+
+.page-title {
+    color: #4d0000;
+}
+
+#homepage-head{
+    padding: 60px;
+
+}
+
+.description-txt {
+    padding-left: 60px;
+}
+
+#for {
+    font-family: 'Bad Script', cursive;
+}
