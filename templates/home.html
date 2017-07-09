@@ -5,7 +5,7 @@
 {% block content %}
     <div id="homepage-head">
         <h1 class="page-title">Scholarships <span id="for">for</span> Women</h1><br>
-        <p class="description-txt">Register and/or login to save scholarships, receive emails of new scholarships, and notifications for upcoming deadlines</p>
+        <p class="description-txt">Register and/or login to save scholarships, subscribe to relevant categories and emails of new scholarships, and receive notifications for upcoming deadlines</p>
 
     </div>
 
@@ -46,7 +46,7 @@
     {% if 'user_id' in session %}
         <h3>Your Categories</h3>
             {% if user_categories %}
-                {% for item in filter_scholarships %}
+                {% for item in filter_scholarships %} <!-- json object -->
                     <div class="card text-center card w-50">
                         <div class="card-header">
                         {{ item[0].organization }}
