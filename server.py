@@ -31,9 +31,9 @@ def display_homepage():
 def login():
     """logs in user"""
 
-    email = request.form.get('email').lower()
+    email = request.form.get('user_email').lower()
     password = request.form.get('password')
-    user = User.query.filter(User.email==email).first()
+    user = User.query.filter(User.user_email==email).first()
     if user:
         password = password.encode('utf8')
         hashedpass = user.password.encode('utf8')
@@ -41,14 +41,14 @@ def login():
             session['user_id'] = user.user_id
             return redirect('/get_user_scholar')
         else:
-            flash("Incorrect password")
-            return redirect ('/')
+            flash('Incorrect password')
+            return redirect('/')
     else:
         flash("Email not found")
         return redirect('/login')
 
 
-@app.route('/logout', methods=['POST'])
+@app.route('/logout')
 def logout():
     """logs out user"""
 
@@ -69,7 +69,7 @@ def register():
         return redirect('/')
 
     password = request.form.get('password').rstrip()
-    password = password.encode('utf8') 
+    password = password.encode('utf8')
     hashed = bcrypt.hashpw(password, bcrypt.gensalt())
 
     name = request.form.get('user_name') # changed
@@ -102,8 +102,8 @@ def save_scholarship():
 @app.route('/user/<user_id>')
 def show_users(user_id):
     """shows user profile"""
-    
-    user = User.query.get(User.user_id==user.id)
+
+    current_user = User.query.filter(User.user_id==user_id).first()
 
     categories = []
 
@@ -120,9 +120,10 @@ def show_users(user_id):
     for category in all_categories:
         all_categories_list.append(category.category_name)
 
-    non_user_categories = set(categories) & set(all_categories)
+    non_user_categories = set(all_categories_list) - set(categories)
+    print non_user_categories
 
-    return render_template('profile.html', user=user, user_categories=categories, non_user_categories=non_user_categories)
+    return render_template('profile.html', user=current_user, user_categories=categories, non_user_categories=non_user_categories)
 
 
 @app.route('/scholarships/<user_id>')
@@ -130,7 +131,8 @@ def show_scholarships(user_id):
     """shows all scholarships?"""
 
     scholarships =[]
-    user_scholarships = UserScholarship.query.filter_by(User.user_id==user_id)
+
+    user_scholarships = UserScholarship.query.filter(User.user_id==user_id).all()
     for user_scholarship in user_scholarships:
         scholarship_id = user_scholarship.scholarship_id
         scholarship = Scholarship.query.get(scholarship_id)
@@ -139,13 +141,14 @@ def show_scholarships(user_id):
     return render_template(somehtml.html, scholarships=scholarships)
 
 
-@app.route('/add_category')
+@app.route('/add_category', methods=["POST"])
 def add_user_category():
     """adds a category to user profile"""
 
     categories = request.form.getlist('categories')
+    print categories
 
-    user_id = session['user_id']
+    user_id = int(session['user_id'])
 
     for category in categories:
         category = Category.query.filter(Category.name == category).first()
@@ -159,24 +162,35 @@ def get_users_scholarship():
     """displays scholarships that fit user's categories"""
 
     scholarships =[]
+    user_id = int(session['user_id'])
+    user = User.query.filter(User.user_id==user_id).first()
 
     user_categories = UserCategory.query.filter_by(UserCategory.user_id==int(session['user_id'])).all()
-
     for user_category in user_categories:
         category_id=user_category.category_id
         scholarship_categories = ScholarshipCategory.query.filter(Scholarship.category_id==category_id).all()
         for scholarship_category in scholarship_categories:
             scholarships.append(Scholarship.query.filter(Scholarship.scholarship_id==scholarship_category.scholarship_id))
 
-    return render_template('results.html', scholarships=scholarships)
+    scholarships_query= Scholarship.query.all()
+    scholarships_list = []
+    for scholarship in scholarships_query:
+        scholarship_id = scholarship.scholarship_id
+        scholarship_categories = ScholarshipCategory.query.filter(ScholarshipCategory.scholarship_id==scholarship_id).all()
+        category_list =[]
+        for sc in scholarship_categories:
+            category_list.append(sc.categories.category_name)
+        scholarships_list.append((scholarship, category_list))
+
+    return render_template('results.html', user=user, scholarships=scholarships, scholarships_list=scholarships_list)
 
 
 
 if __name__ == "__main__":
-    app.debug = True
-    app.jinja_env.auto_reload = app.debug
+
+    # app.debug = True
+    # app.jinja_env.auto_reload = app.debug
     connect_to_db(app)
-    DebugToolbarExtension(app)
+    # DebugToolbarExtension(app)
     http_server = WSGIServer(('0.0.0.0', 5000), app)
     http_server.serve_forever()
-   

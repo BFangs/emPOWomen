@@ -22,17 +22,20 @@
   {% if 'user_id' in session %}
 
 <ul class="nav flex-column">
+    <li class="nav-item">
+    &nbsp;&nbsp;EmPOWomen
+  </li>
   <li class="nav-item">
-    <a class="nav-link active" href="#">Home</a>
+    <a class="nav-link active" href='/get_user_scholar'>Home</a>
   </li>
   <li class="nav-item">
     <a class="nav-link active" href="#">Saved Scholarships</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Profile</a>
+    <a class="nav-link" href="/user/{{ session['user_id'] }}">Profile</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="#">Log Out</a>
+    <a class="nav-link" href="/logout">Log Out</a>
   </li>
 </ul>
 
