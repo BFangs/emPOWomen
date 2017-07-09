@@ -26,6 +26,10 @@ class Scraper(object):
             print row
             link = row.find("a")["href"]
             try:
+                link = self.get_real_link(link)
+            except:
+                link = "https://www.scholarships.com" + link
+            try:
                 amount = row.find("td", "scholamt").text.strip()
                 no_comma = amount.replace(',', '')
                 amount_num = int(no_comma.replace('$', ''))
@@ -44,6 +48,18 @@ class Scraper(object):
             print scholarship
             self.results.append(scholarship)
         return self.results
+
+    @staticmethod
+    def get_real_link(url):
+        """get actual links from scholarships.com table"""
+        base = "https://www.scholarships.com"
+        html = urlopen(base+url).read()
+        soup = BeautifulSoup(html, "html.parser")
+        button = soup(text='Apply Now!')
+        tag = button[0].parent["href"]
+        link = tag.split()[0][26:-2]
+        return link
+
 
     @classmethod
     def load_all(cls, website):
