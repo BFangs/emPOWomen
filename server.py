@@ -103,19 +103,21 @@ def add_user_category():
         user_category = UserCategory(user_id= user_id, category_id = category.category_id)
         db.add(user_category)
         db.commit()
+        
 
 @app.route('/get_user_scholar')
 def get_users_scholarship():
-    """"""
+    """displays scholarships that fit user's categories"""
 
-    # scholarships =[]
+    scholarships =[]
 
-    # user_categories = UserCategory.query.filter_by(user_id==session['user_id']).all()
-    # for user_category in user_categories:
-    #     category_id=user_category.category_id
-    #     scholarship_categories = ScholarshipCategory.query.filter(category_id==category_id).all()
-    #     for scholarship in scholarship_categories:
-
+    user_categories = UserCategory.query.filter_by(user_id==session['user_id']).all()
+    for user_category in user_categories:
+        category_id=user_category.category_id
+        scholarship_categories = ScholarshipCategory.query.filter(Scholarship.category_id==category_id).all()
+        for scholarship_category in scholarship_categories:
+            scholarships.append(Scholarship.query.filter(Scholarship.scholarship_id==scholarship_category.scholarship_id))
+    return render_template('somehtml.html', scholarships=scholarships)
 
 
 
