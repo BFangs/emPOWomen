@@ -8,6 +8,7 @@
 </head>
 
 <body class="background">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="http://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 
@@ -29,7 +30,7 @@
     <a class="nav-link active" href='/get_user_scholar'>Home</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link active" href="#">Saved Scholarships</a>
+    <a class="nav-link active" href="/scholarships/{{ session['user_id'] }}">Saved Scholarships</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="/user/{{ session['user_id'] }}">Profile</a>
@@ -45,10 +46,16 @@
 
 
 
-  <div class="container"> 
+  <div class="container">
     {% block content %} put your content here {% endblock %}
+    <div id="twitter">
+      <a class="twitter-timeline"  href="https://twitter.com/search?q=girls%20OR%20female%20OR%20women%20scholarship" data-partner="tweetdeck"data-widget-id="884272252883054593">Tweets about girls OR female OR women scholarship</a>
+    </div>
   </div>
+
+<script>
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+</script>
 
 </body>
 </html>
-

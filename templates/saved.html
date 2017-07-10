@@ -14,24 +14,19 @@
 
     <div class="card text-center card w-50">
       <div class="card-header">
-        {{ item[0].organization }}
+        {{ item.organization }}
       </div>
       <div class="card-block">
-        <h4 class="card-title">{{ item[0].scholarship_name }}</h4>
+        <h4 class="card-title">{{ item.scholarship_name }}</h4>
         <p class="card-text">
-            Amount: {{ item[0].amount }}<br>
+            Amount: {{ item.amount }}<br>
 
-            Categories: <br>
-            {% for category in item[1] %}
-                {{ category }}<br>
-            {% endfor %}
 
         </p>
-        <a href="{{item[0].url}}" target="_blank" class="btn btn-primary">Apply Online</a>
-        <a href="/save" method="POST" class="btn btn-secondary">Save</a>
+        <a href="{{item.url}}" target="_blank" class="btn btn-primary">Apply Online</a>
       </div>
-      <div class="card-footer text-muted">Deadline: {{ item[0].deadline }}
-        
+      <div class="card-footer text-muted">Deadline: {{ item.deadline }}
+
       </div>
     </div>
     <p>

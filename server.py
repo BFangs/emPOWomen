@@ -90,10 +90,11 @@ def save_scholarship():
     scholarship_id = request.form.get("scholarship_id")
 
     if 'user_id' in session:
-        user_scholarship = UserScholarship(scholarship_id, user_id)
-        db.add(user_scholarship)
-        db.commit()
-
+        user_id = session['user_id']
+        user_scholarship = UserScholarship(scholarship_id=scholarship_id, user_id=user_id)
+        db.session.add(user_scholarship)
+        db.session.commit()
+        return redirect('/get_user_scholar')
     else:
         flash("Login to save")
         return redirect('/login')
@@ -131,14 +132,14 @@ def show_scholarships(user_id):
     """shows all scholarships?"""
 
     scholarships =[]
-
-    user_scholarships = UserScholarship.query.filter(User.user_id==user_id).all()
+    user_id = int(session['user_id'])
+    user_scholarships = UserScholarship.query.filter(UserScholarship.user_id==user_id).all()
     for user_scholarship in user_scholarships:
         scholarship_id = user_scholarship.scholarship_id
         scholarship = Scholarship.query.get(scholarship_id)
         scholarships.append(scholarship)
 
-    return render_template(somehtml.html, scholarships=scholarships)
+    return render_template('saved.html', scholarships=scholarships)
 
 
 @app.route('/add_category', methods=["POST"])
@@ -151,10 +152,11 @@ def add_user_category():
     user_id = int(session['user_id'])
 
     for category in categories:
-        category = Category.query.filter(Category.name == category).first()
+        category = Category.query.filter(Category.category_name == category).first()
         user_category = UserCategory(user_id= user_id, category_id = category.category_id)
-        db.add(user_category)
-        db.commit()
+        db.session.add(user_category)
+        db.session.commit()
+    return redirect('/user/%s'%(str(user_id)))
 
 
 @app.route('/get_user_scholar')
@@ -165,10 +167,10 @@ def get_users_scholarship():
     user_id = int(session['user_id'])
     user = User.query.filter(User.user_id==user_id).first()
 
-    user_categories = UserCategory.query.filter_by(UserCategory.user_id==int(session['user_id'])).all()
+    user_categories = UserCategory.query.filter(UserCategory.user_id==int(session['user_id'])).all()
     for user_category in user_categories:
         category_id=user_category.category_id
-        scholarship_categories = ScholarshipCategory.query.filter(Scholarship.category_id==category_id).all()
+        scholarship_categories = ScholarshipCategory.query.filter(ScholarshipCategory.category_id==category_id).all()
         for scholarship_category in scholarship_categories:
             scholarships.append(Scholarship.query.filter(Scholarship.scholarship_id==scholarship_category.scholarship_id))
 

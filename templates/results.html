@@ -16,7 +16,7 @@
         <h4>All</h4>
         <div id="results-all-div">
 
-            {% for item in scholarships_list %} 
+            {% for item in scholarships_list %}
         <div class="card text-center card w-50">
             <div class="card-header">
             {{ item[0].organization }}
@@ -32,7 +32,9 @@
 
                 </p>
                 <a href="{{item[0].url}}" target="_blank" class="btn btn-primary primary-btn-link">Apply Online</a>
-                <a href="/save" method="POST" class="btn btn-secondary save-btn">Save</a>
+                <form action="/save" method="POST">
+                <button type="submit" class="btn btn-secondary save-btn" name="scholarship_id" value="{{item[0].scholarship_id}}">Save
+                </form>
             </div>
             <div class="card-footer text-muted">Deadline: {{ item[0].deadline }}
             </div>
@@ -43,6 +45,5 @@
 </div>
 
     {% endif %}
-
 
 {% endblock %}

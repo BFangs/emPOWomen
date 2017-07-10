@@ -2,7 +2,14 @@ body {
     font-family: 'Oxygen', sans-serif;
 
 }
-
+div#twitter{
+  top: 200px;
+  right: 5%;
+  width: 30%;
+  height 100%;
+  position: fixed;
+  z-index: 200;
+}
 .background {
     /*background-image:linear-gradient(to bottom, rgba(255,255,255,0.5) 100%, rgba(255,255,255,0.5) 100%), url("/static/images/pineapples.jpeg");*/
     background-image:linear-gradient(to bottom, rgba(255,255,255,0.7) 100%, rgba(255,255,255,0.7) 100%), url("/static/homepage.jpeg");
@@ -49,7 +56,7 @@ a, a:link, a:hover, a:active, a:visited {
     background-color: #990000;
     border-color: #990000;
     color:white;
-    
+
 }
 
 
@@ -60,14 +67,14 @@ a, a:link, a:hover, a:active, a:visited {
 .btn-primary:hover {
     background-color: #4d0000;
     border-color: #4d0000;
-    
+
 }
 
 
 
-.btn-secondary, 
-.btn-secondary:visited, 
-.btn-outline-primary, 
+.btn-secondary,
+.btn-secondary:visited,
+.btn-outline-primary,
 .btn-outline-primary:visited {
     border-color: #990000;
     color: #990000;
@@ -76,9 +83,9 @@ a, a:link, a:hover, a:active, a:visited {
 
 .btn-secondary:hover,
 .btn-secondary:active,
-.btn-secondary:focus, 
-.btn-outline-primary:hover, 
-.btn-outline-primary:active, 
+.btn-secondary:focus,
+.btn-outline-primary:hover,
+.btn-outline-primary:active,
 .btn-outline-primary:focus {
     background-color: #990000;
     border-color: #990000;
