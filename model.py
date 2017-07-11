@@ -38,13 +38,13 @@ class Scholarship(db.Model):
     __tablename__ = "scholarships"
 
     scholarship_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    scholarship_name = db.Column(db.String(100), nullable=False, unique=True)
-    organization = db.Column(db.String(100))
-    amount = db.Column(db.Integer)
+    scholarship_name = db.Column(db.String(100), nullable=False, unique=True, index=True)
+    organization = db.Column(db.String(100), default=None)
+    amount = db.Column(db.Integer, default=0)
     annual = db.Column(db.Boolean)
     deadline = db.Column(db.DateTime)
     created = db.Column(db.DateTime, nullable=False, default=datetime.now(tz=pacific))
-    url = db.Column(db.String(200))
+    url = db.Column(db.String(200), default=None)
 
     def __repr__(self):
         """Displayed when called"""

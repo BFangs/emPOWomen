@@ -9,10 +9,10 @@ from sendgrid.helpers.mail import *
 apikey=os.environ.get('SENDGRID_API_KEY')
 connect_to_db(app)
 
-def job():
+def reminder_job():
     now = datetime.now()
     end = now + timedelta(weeks=2)
-    to_send = queue_messages(now, end)
+    to_send = queue_upcoming(now, end)
     for item in to_send:
         name, deadline, url, amount, saved_thing = item
         email = saved_thing.users.user_email
@@ -33,7 +33,32 @@ def job():
             print "failed to send message to user " + email
     db.session.commit()
 
-def queue_messages(now, end):
+def digest_job():
+    now = datetime.now()
+    last = now - timedelta(weeks=1)
+    to_send = queue_new_entries(now, last)
+    compiled
+    # not finished with cron job!
+
+
+def queue_new_entries(now, last):
+    new = Scholarship.query.filter(Scholarship.created<=now, Scholarship.created>=last).all()
+    to_send = []
+    for item in new:
+        info = {"name": item.scholarship_name}
+        if item.deadline:
+            info["deadline": item.deadline]
+        if item.amount:
+            info["amount": item.amount]
+        if item.url:
+            info["url": item.url]
+        if item.organization:
+            info["organization": item.organization]
+        to_send.append(info)
+    return to_send
+
+
+def queue_upcoming(now, end):
     saved = UserScholarship.query.filter(UserScholarship.sent==False).all()
     to_send = []
     for one in saved:
@@ -48,7 +73,8 @@ def queue_messages(now, end):
 
 
 
-schedule.every().day.at("10:30").do(job)
+schedule.every().day.at("10:30").do(reminder_job)
+schedule.every().monday.at("10:00").do(digest_job)
 
 while 1:
     schedule.run_pending()
