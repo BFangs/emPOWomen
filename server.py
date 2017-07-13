@@ -191,7 +191,7 @@ if __name__ == "__main__":
     # app.debug = True
     # app.jinja_env.auto_reload = app.debug
     connect_to_db(app)
-    app.run(port=5000, host='0.0.0.0')
+    app.run(port=5000)
     # DebugToolbarExtension(app)
     # http_server = WSGIServer(('0.0.0.0', 5000), app)
     # http_server.serve_forever()
