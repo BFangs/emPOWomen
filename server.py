@@ -45,8 +45,8 @@ def login():
             flash('Incorrect password')
             return redirect('/')
     else:
-        flash("Email not found")
-        return redirect('/login')
+        flash("Email not found, please register!")
+        return redirect('/')
 
 
 @app.route('/logout')
@@ -98,7 +98,7 @@ def save_scholarship():
         return redirect('/get_user_scholar')
     else:
         flash("Login to save")
-        return redirect('/login')
+        return redirect('/')
 
 
 @app.route('/user/<user_id>')
