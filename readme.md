@@ -1,7 +1,7 @@
 # emPOWomen
 [check it out live!](https://empowomen.herokuapp.com/)
 
-![screenshot](https://github.com/BFangs/scholarships-for-women/master/static/screenshot.png)
+![screenshot](https://github.com/BFangs/scholarships-for-women/blob/master/static/screenshot.png)
 
 ## Introduction
 
