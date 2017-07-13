@@ -3,7 +3,7 @@ from flask import (Flask, session, render_template, request, jsonify, redirect, 
 import hashlib
 from flask_debugtoolbar import DebugToolbarExtension
 from model import connect_to_db, User, Scholarship, Category, UserCategory, UserScholarship, ScholarshipCategory, db #add db
-from gevent.wsgi import WSGIServer
+# from gevent.wsgi import WSGIServer
 import bcrypt
 
 app = Flask(__name__)
@@ -191,6 +191,7 @@ if __name__ == "__main__":
     # app.debug = True
     # app.jinja_env.auto_reload = app.debug
     connect_to_db(app)
+    app.run(port=5000, host='0.0.0.0')
     # DebugToolbarExtension(app)
-    http_server = WSGIServer(('0.0.0.0', 5000), app)
-    http_server.serve_forever()
+    # http_server = WSGIServer(('0.0.0.0', 5000), app)
+    # http_server.serve_forever()
