@@ -7,7 +7,7 @@ db = SQLAlchemy()
 
 pacific = pytz.timezone('US/Pacific')
 
-def connect_to_db(app, db_url='postgresql:///scholarships'):
+def connect_to_db(app, db_url='"/var/run/postgresql/.s.PGSQL.5432"'):
     """Connect the database to our Flask app."""
 
     app.config['SQLALCHEMY_DATABASE_URI'] = db_url
