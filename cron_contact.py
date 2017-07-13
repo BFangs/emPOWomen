@@ -74,7 +74,7 @@ def queue_upcoming(now, end):
 
 
 schedule.every().day.at("10:30").do(reminder_job)
-schedule.every().monday.at("10:00").do(digest_job)
+#schedule.every().monday.at("10:00").do(digest_job)
 
 while 1:
     schedule.run_pending()
