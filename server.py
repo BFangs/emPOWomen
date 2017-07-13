@@ -5,6 +5,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from model import connect_to_db, User, Scholarship, Category, UserCategory, UserScholarship, ScholarshipCategory, db #add db
 # from gevent.wsgi import WSGIServer
 import bcrypt
+import os
 
 app = Flask(__name__)
 app.secret_key = "GOFEMINISM"
@@ -191,7 +192,7 @@ if __name__ == "__main__":
     # app.debug = True
     # app.jinja_env.auto_reload = app.debug
     connect_to_db(app)
-    app.run(port=5000)
+    app.run(port=int(os.environ['PORT']), host='0.0.0.0')
     # DebugToolbarExtension(app)
     # http_server = WSGIServer(('0.0.0.0', 5000), app)
     # http_server.serve_forever()
