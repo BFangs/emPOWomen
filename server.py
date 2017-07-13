@@ -122,7 +122,6 @@ def show_users(user_id):
         all_categories_list.append(category.category_name)
 
     non_user_categories = set(all_categories_list) - set(categories)
-    print non_user_categories
 
     return render_template('profile.html', user=current_user, user_categories=categories, non_user_categories=non_user_categories)
 
@@ -147,7 +146,6 @@ def add_user_category():
     """adds a category to user profile"""
 
     categories = request.form.getlist('categories')
-    print categories
 
     user_id = int(session['user_id'])
 
