@@ -76,6 +76,15 @@ def create_scholarship_categories():
 
     db.session.add_all([one, two, three, four, five])
     db.session.commit()
+    
+
+app = Flask(__name__)
+connect_to_db(app)
+db.create_all()
+create_scholarships()
+create_categories()
+create_scholarship_categories()
+create_scholarships_website()
 
 if __name__ == "__main__":
     #later can import app from server
